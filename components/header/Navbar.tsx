@@ -14,6 +14,7 @@ import Image from "apps/website/components/Image.tsx";
 import NavItem from "./NavItem.tsx";
 import { navbarHeight } from "./constants.ts";
 import { Buttons, Logo } from "../../components/header/Header.tsx";
+import TotalLikes from "deco-sites/deco-camp-say/islands/TotalLikes.tsx";
 
 // Make it sure to render it on the server only. DO NOT render it on an island
 function Navbar(
@@ -103,33 +104,9 @@ function Navbar(
         )}
 
         <Searchbar searchbar={searchbar} />
-        {!buttons?.hideAccountButton && (
-          <a
-            class="flex items-center text-xs font-thin"
-            href="/account"
-            aria-label="Account"
-          >
-            <div class="flex btn btn-circle btn-sm btn-ghost gap-1">
-              <Icon id="User" size={20} strokeWidth={0.4} />
-            </div>
-            ACCOUNT
-          </a>
-        )}
-        {!buttons?.hideWishlistButton && (
-          <a
-            class="flex items-center text-xs font-thin"
-            href="/wishlist"
-            aria-label="Wishlist"
-          >
-            <button
-              class="flex btn btn-circle btn-sm btn-ghost gap-1"
-              aria-label="Wishlist"
-            >
-              <Icon id="Heart" size={24} strokeWidth={0.4} />
-            </button>
-            WISHLIST
-          </a>
-        )}
+
+        <TotalLikes />
+
         {!buttons?.hideCartButton && (
           <div class="flex items-center text-xs font-thin">
             {platform === "vtex" && <CartButtonVTEX />}

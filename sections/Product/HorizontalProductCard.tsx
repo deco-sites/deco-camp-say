@@ -8,6 +8,7 @@ import { formatPrice } from "deco-sites/deco-camp-say/sdk/format.ts";
 import { AppContext } from "deco-sites/deco-camp-say/apps/site.ts";
 import { SectionProps } from "deco/types.ts";
 import { clx } from "deco-sites/deco-camp-say/sdk/clx.ts";
+import LikeButton from "deco-sites/deco-camp-say/islands/LikeButton.tsx";
 
 export interface Props {
   productPage: ProductDetailsPage;
@@ -48,10 +49,11 @@ export default function HorizontalProductCard(
   return (
     <div
       class={clx(
-        "card bg-base-100 p-5 overflow-hidden shadow-xl mx-auto flex flex-row gap-2",
+        "card bg-base-100 p-5 relative overflow-hidden shadow-xl mx-auto flex flex-row gap-2",
         maxWidth,
       )}
     >
+      <LikeButton class="absolute right-4 top-4" />
       <div class="overflow-hidden">
         <Image
           src={mainImage?.url!}
