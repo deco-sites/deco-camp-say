@@ -53,7 +53,7 @@ export default function HorizontalProductCard(
         maxWidth,
       )}
     >
-      <LikeButton class="absolute right-4 top-4" />
+      <LikeButton class="absolute right-4 top-4" productID={productID} />
       <div class="overflow-hidden">
         <Image
           src={mainImage?.url!}
