@@ -4,6 +4,8 @@ import Icon from "deco-sites/deco-camp-say/components/ui/Icon.tsx";
 import { clx } from "deco-sites/deco-camp-say/sdk/clx.ts";
 import { totalLikes } from "deco-sites/deco-camp-say/sdk/useTotalLikes.tsx";
 import { invoke } from "deco-sites/deco-camp-say/runtime.ts";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { ComponentType } from "preact";
 
 interface Props {
   class?: string;
@@ -13,6 +15,8 @@ interface Props {
 export function LikeButton({ class: _class, productID }: Props) {
   const voted = useSignal(false);
   const totalProductLikes = useSignal(0);
+
+  const Toast = ToastContainer as ComponentType;
 
   async function handleClick() {
     voted.value = true;
@@ -24,6 +28,17 @@ export function LikeButton({ class: _class, productID }: Props) {
 
     totalLikes.value = total;
     totalProductLikes.value = product;
+
+    toast.success("Curtido!", {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+      transition: Bounce,
+    });
   }
 
   async function getVote() {
@@ -51,6 +66,8 @@ export function LikeButton({ class: _class, productID }: Props) {
         : <Icon id="MoodSmile" size={24} class="text-primary" />}
 
       <span>{totalProductLikes.value}</span>
+
+      <Toast />
     </button>
   );
 }

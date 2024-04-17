@@ -9,9 +9,10 @@ import { AppContext } from "deco-sites/deco-camp-say/apps/site.ts";
 import { SectionProps } from "deco/types.ts";
 import { clx } from "deco-sites/deco-camp-say/sdk/clx.ts";
 import LikeButton from "deco-sites/deco-camp-say/islands/LikeButton.tsx";
+import type { ProductCardFlagProps } from "deco-sites/deco-camp-say/flags/multivariate/ProductCardFlag.ts";
 
 export interface Props {
-  productPage: ProductDetailsPage;
+  products: ProductCardFlagProps;
   maxWidth?:
     | "max-w-xl"
     | "max-w-2xl"
@@ -32,11 +33,20 @@ export const loader = (props: Props, _req: Request, ctx: AppContext) => {
 };
 
 export default function HorizontalProductCard(
-  { productPage: { product }, maxWidth = "max-w-5xl", animateImage = true }:
-    SectionProps<
-      typeof loader
-    >,
+  { products, maxWidth = "max-w-5xl", animateImage = true }: SectionProps<
+    typeof loader
+  >,
 ) {
+  if (!products?.length || products.length === 0) {
+    return null;
+  }
+
+  const product = products[0];
+
+  if (!product) {
+    return null;
+  }
+
   const mainImage = product?.image?.[0];
 
   const { offers, productID, url, name } = product;
@@ -107,7 +117,7 @@ export function ErrorFallback({ error }: { error?: Error }) {
   return (
     <div class="w-full flex justify-center items-center">
       <figure>
-        <Image src="/acai.jpg" width={300} />
+        <Image src="/static/acai.jpg" width={300} />
         <figcaption>Grãos de Açaí</figcaption>
       </figure>
 

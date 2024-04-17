@@ -39,6 +39,11 @@ export default defineApp(async (_req, ctx) => {
         type="module"
         dangerouslySetInnerHTML={{ __html: `(${sw})();` }}
       />
+
+      <link
+        rel="stylesheet"
+        href="https://esm.sh/react-toastify@10.0.5/dist/ReactToastify.css"
+      />
     </>
   );
 });
