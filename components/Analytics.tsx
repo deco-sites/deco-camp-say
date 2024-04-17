@@ -1,17 +1,31 @@
-import type { AnalyticsEvent } from "apps/commerce/types.ts";
+import type { AnalyticsEvent, IEvent } from "apps/commerce/types.ts";
 import { scriptAsDataURI } from "apps/utils/dataURI.ts";
+
+export interface PostScoreParams {
+  score: number;
+  level: number;
+  character: string;
+}
+
+export interface PostScoreEvent extends IEvent<PostScoreParams> {
+  name: "post_score";
+}
+
+type AnalyticsEventExtend = AnalyticsEvent | PostScoreEvent;
 
 /**
  * This function is usefull for sending events on click. Works with both Server and Islands components
  */
-export const SendEventOnClick = <E extends AnalyticsEvent>({ event, id }: {
-  event: E;
-  id: string;
-}) => (
+export const SendEventOnClick = <E extends AnalyticsEventExtend>(
+  { event, id }: {
+    event: E;
+    id: string;
+  },
+) => (
   <script
     defer
     src={scriptAsDataURI(
-      (id: string, event: AnalyticsEvent) => {
+      (id: string, event: AnalyticsEventExtend) => {
         const elem = document.getElementById(id);
 
         if (!elem) {

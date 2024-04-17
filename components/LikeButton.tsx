@@ -1,11 +1,12 @@
 import { useSignal } from "@preact/signals";
-import { useEffect } from "preact/hooks";
+import { useEffect, useId } from "preact/hooks";
 import Icon from "deco-sites/deco-camp-say/components/ui/Icon.tsx";
 import { clx } from "deco-sites/deco-camp-say/sdk/clx.ts";
 import { totalLikes } from "deco-sites/deco-camp-say/sdk/useTotalLikes.tsx";
 import { invoke } from "deco-sites/deco-camp-say/runtime.ts";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { ComponentType } from "preact";
+import { SendEventOnClick } from "deco-sites/deco-camp-say/components/Analytics.tsx";
 
 interface Props {
   class?: string;
@@ -15,6 +16,8 @@ interface Props {
 export function LikeButton({ class: _class, productID }: Props) {
   const voted = useSignal(false);
   const totalProductLikes = useSignal(0);
+
+  const id = useId();
 
   const Toast = ToastContainer as ComponentType;
 
@@ -57,6 +60,7 @@ export function LikeButton({ class: _class, productID }: Props) {
 
   return (
     <button
+      id={id}
       onClick={handleClick}
       type="button"
       class={clx("flex gap-2 items-center", _class)}
@@ -68,6 +72,18 @@ export function LikeButton({ class: _class, productID }: Props) {
       <span>{totalProductLikes.value}</span>
 
       <Toast />
+
+      <SendEventOnClick
+        id={id}
+        event={{
+          name: "post_score",
+          params: {
+            score: totalProductLikes.value + 1,
+            level: 5,
+            character: String(productID),
+          },
+        }}
+      />
     </button>
   );
 }
