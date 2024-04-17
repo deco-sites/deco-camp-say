@@ -13,7 +13,7 @@ export default function PartialImageGallery(
 ) {
   return (
     <div class="mx-auto max-w-[865px]">
-      <div class="flex flex-wrap gap-3">
+      <div class="flex flex-wrap gap-3 justify-center">
         {images.slice(0, quantRenderImages).map((image, index) => (
           <Image
             src={image}
